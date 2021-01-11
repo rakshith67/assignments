@@ -1,0 +1,3 @@
+cluster: localhost:8091
+bucket: todo
+timeout: 10000

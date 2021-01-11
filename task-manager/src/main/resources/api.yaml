@@ -1,0 +1,241 @@
+swagger: "2.0"
+info:
+  description: |
+    This service enables the user to maintain their tasks.
+  version: "1.0"
+  title: Task-Manager
+host: "petstore.swagger.io"
+basePath: "/taskManagement/v1"
+tags:
+- name: "taskManagement"
+  description: "Management of the tasks"
+schemes:
+- "http"
+paths:
+  /todos:
+    post:
+      tags:
+      - "taskManagement"
+      description: "This API will create a TODO in the database."
+      operationId: "createTodo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Todo object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Todo"
+      responses:
+        405:
+          description: "Invalid Method Type"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        200:
+          description: "Successfully removed users"
+          schema:
+            $ref: "#/definitions/Todo"
+        400:
+          description: "Bad Request errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Errors"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        502:
+          description: "Bad gateway errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    get:
+      tags:
+      - "taskManagement"
+      description: "This API will retrieve all the existing todo's in the database."
+      operationId: "getTodo"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        405:
+          description: "Invalid Method Type"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        200:
+          description: "Successfully removed users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Todo"
+        400:
+          description: "Bad Request errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Errors"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        502:
+          description: "Bad gateway errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /todos/{id}:
+    get:
+      tags:
+      - "taskManagement"
+      description: "This API will get the TODO by id."
+      operationId: "getTodobyId"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        type: "string"
+        name: "id"
+        description: "Id of the todo"
+        required: true
+      responses:
+        405:
+          description: "Invalid Method Type"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        200:
+          description: "Successfully got todo from id"
+          schema:
+            $ref: "#/definitions/Todo"
+        400:
+          description: "Bad Request errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Errors"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        502:
+          description: "Bad gateway errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    put:
+      tags:
+      - "taskManagement"
+      description: "This API will put given TODO in the database."
+      operationId: "putTodoById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Todo object that needs to be put"
+        required: true
+        schema:
+          $ref: "#/definitions/Todo"
+      - in: "path"
+        type: "string"
+        name: "id"
+        description: "Id of the todo"
+        required: true
+      responses:
+        405:
+          description: "Invalid Method Type"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        200:
+          description: "Successfully put todo"
+          schema:
+            $ref: "#/definitions/Todo"
+        400:
+          description: "Bad Request errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Errors"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        502:
+          description: "Bad gateway errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    delete:
+      tags:
+      - "taskManagement"
+      description: "This API will delete a TODO in the database."
+      operationId: "deleteTodoById"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        type: "string"
+        name: "id"
+        description: "Id of the todo"
+        required: true
+      responses:
+        405:
+          description: "Invalid Method Type"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        200:
+          description: "Successfully deleted todo"
+          schema:
+            $ref: "#/definitions/Todo"
+        400:
+          description: "Bad Request errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "Internal Server Errors"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        502:
+          description: "Bad gateway errors."
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+definitions:
+  Todo:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier for the todo"
+      description: 
+        type: "string"
+        description: "description of the todo"
+      name:
+        type: "string"
+        description: "Name of the todo"
+      tasks:
+        type: "array"
+        items:
+          $ref: '#/definitions/Task'
+  Task:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier for the task"
+      description: 
+        type: "string"
+        description: "description of the task"
+      name:
+        type: "string"
+        description: "Name of the task"
+  ErrorResponse:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+        description: "Business code for the error"
+      message:
+        type: "string"
+        description: "Message of the error"
+      traceid:
+        type: "string"
+        description: "Unique traceId of the error"

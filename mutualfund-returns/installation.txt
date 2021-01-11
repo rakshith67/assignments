@@ -1,0 +1,4 @@
+run the API using
+
+curl --location --request GET 'http://localhost:8080/mutualFund/returns?schemeNumber=100121&period=1&horizon=1' \
+--header 'Content-Type: application/json'
